@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Create Flask app, register blueprint and runs app"""
 from os import getenv
 from api.v1.views import app_views
 from models import storage
