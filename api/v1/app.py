@@ -4,9 +4,11 @@ from os import getenv
 from api.v1.views import app_views
 from models import storage
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 app.register_blueprint(app_views)
 
@@ -19,9 +21,8 @@ def teardown_db(exception):
 
 @app.errorhandler(404)
 def page_not_found(error):
-    response = jsonify({'error': 'Not found'})
-    response.status_code = 404
-    return response
+    """Page not found error handler"""
+    return jsonify({'error': 'Not found'}), 404
 
 
 if __name__ == '__main__':
