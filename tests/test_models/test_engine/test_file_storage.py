@@ -21,6 +21,7 @@ import unittest
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
+f = './dev/file.json'
 
 
 class TestFileStorageDocs(unittest.TestCase):
@@ -113,3 +114,36 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorageGetCount(unittest.TestCase):
+    """ Test the get and count methods of FileStorage class"""
+    def setUp(self):
+        """Initialize for tests"""
+        if os.path.isfile(f):
+            os.remove(f)
+        storage = FileStorage()
+        storage.reload()
+        self.state = State()
+        self.state.name = 'Oklahoma'
+        self.state.save()
+
+    def test_get(self):
+        """Test get method"""
+        storage = FileStorage()
+        true_state = storage.get(State, self.state.id)
+        false_state = storage.get(State, "xd")
+        empty_state = storage.get("", "")
+
+        self.assertEqual(true_state, self.state)
+        self.assertNotEqual(false_state, self.state)
+        self.assertIsNone(empty_state)
+
+    def test_count(self):
+        """ Test count method"""
+        storage = FileStorage()
+        state_count = storage.count("State")
+        count = storage.count(None)
+
+        self.assertEqual(state_count, 1)
+        self.assertEqual(count, 1)
