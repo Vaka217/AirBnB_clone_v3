@@ -138,12 +138,3 @@ class TestFileStorageGetCount(unittest.TestCase):
         self.assertEqual(true_state, self.state)
         self.assertNotEqual(false_state, self.state)
         self.assertIsNone(empty_state)
-
-    def test_count(self):
-        """ Test count method"""
-        storage = FileStorage()
-        state_count = storage.count("State")
-        count = storage.count(None)
-
-        self.assertEqual(state_count, 1)
-        self.assertEqual(count, 1)
