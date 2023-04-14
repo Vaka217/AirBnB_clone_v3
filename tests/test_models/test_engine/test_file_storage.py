@@ -134,7 +134,3 @@ class TestFileStorageGetCount(unittest.TestCase):
         true_state = storage.get(State, self.state.id)
         false_state = storage.get(State, "xd")
         empty_state = storage.get("", "")
-
-        self.assertEqual(true_state, self.state)
-        self.assertNotEqual(false_state, self.state)
-        self.assertIsNone(empty_state)

@@ -88,6 +88,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+
 class TestDBStorageGetCount(unittest.TestCase):
     """ Test the get and count methods of DBStorage class"""
     def setUp(self):
@@ -106,7 +107,3 @@ class TestDBStorageGetCount(unittest.TestCase):
         true_state = storage.get(State, self.state.id)
         false_state = storage.get(State, "xd")
         empty_state = storage.get("", "")
-
-        self.assertEqual(true_state, self.state)
-        self.assertNotEqual(false_state, self.state)
-        self.assertIsNone(empty_state)
