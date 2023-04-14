@@ -8,7 +8,8 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route("/places/<place_id>/reviews", methods=['GET'], strict_slashes=False)
+@app_views.route("/places/<place_id>/reviews", methods=['GET'],
+                 strict_slashes=False)
 def show_reviews(place_id):
     """Retrieves the list of all Review objects"""
     place = storage.get(Place, place_id)
@@ -56,7 +57,7 @@ def post_review(place_id):
         abort(400, 'Not a JSON')
     if 'user_id' not in post:
         abort(400, 'Missing user_id')
-    user = storage.get(User, post.user_id)
+    user = storage.get(User, post['user_id'])
     if user is None:
         abort(404)
     if 'text' not in post:

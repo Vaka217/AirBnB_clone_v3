@@ -5,9 +5,11 @@ from models import storage
 from flask import jsonify, abort, request
 from models.city import City
 from models.place import Place
+from models.user import User
 
 
-@app_views.route("/cities/<city_id>/places", methods=['GET'], strict_slashes=False)
+@app_views.route("/cities/<city_id>/places", methods=['GET'],
+                 strict_slashes=False)
 def show_places(city_id):
     """Retrieves the list of all Place objects"""
     city = storage.get(City, city_id)
@@ -55,6 +57,11 @@ def post_place(city_id):
         abort(400, 'Not a JSON')
     if 'user_id' not in post:
         abort(400, 'Missing user_id')
+    user = storage.get(User, post['user_id'])
+    if user is None:
+        abort(404)
+    if 'name' not in post:
+        abort(400, 'Missing name')
     place = Place(**post)
     place.city_id = city_id
     place.save()
